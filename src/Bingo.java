@@ -1,54 +1,55 @@
 import java.util.ArrayList;
 
 public class Bingo {
-    //Atributos
-    private ArrayList<Integer> Bingo= new ArrayList<>();
-    private ArrayList<Integer> Cartulina1=new ArrayList<>();
-    private ArrayList<Integer> Cartulina2=new ArrayList<>();
+    //Atributos.
+    public static int tamañoCartulinas=10;
 
+    //Constructor.
     public Bingo(){};
 
-    public void generarCartulinas(){
-        for (int i = 0; i <20 ; i++) {
+    //Metodos.
+    public void generarCartulinas(ArrayList<Integer> cartulina){
+        while (cartulina.size()<tamañoCartulinas){
             int numero=(int)(Math.random()*99);
-            Cartulina1.add(numero);
-            System.out.println(Cartulina1);
+                if (comprovarRepetido(cartulina, numero)){
+                cartulina.add(numero);
+                }
             }
-        for (int i = 0; i <20 ; i++) {
-            int numero2=(int)(Math.random()*99);
-            Cartulina2.add(numero2);
-        }
         }
 
-    private boolean comprovarRepetido(ArrayList cartulina, int numero){
+    public boolean comprovarRepetido(ArrayList<Integer> cartulina, int numero){
         boolean comprovador=true;
-        for (int i = 0; i <20 ; i++) {
-            if (cartulina.get(i) == numero){
-                comprovador=false;
+        for (int i = 0; i <tamañoCartulinas ; i++) {
+            if (i<0) {
+                if (cartulina.get(i) == numero){
+                    comprovador=false;
+                }
             }
+        }
         return comprovador;
+    }
+
+    public void comprobarNumero(int numero, ArrayList<Integer> cartulina){
+        for (int i = 0; i <cartulina.size() ; i++) {
+            if (cartulina.get(i) == numero){
+                cartulina.remove(i);
+            }
         }
     }
 
-    public void Bingo(){
-        while (this.Cartulina1!=null||this.Cartulina2!=null){
+    public void Bingo(ArrayList<Integer> cartulina1, ArrayList<Integer> cartulina2){
+        while (cartulina1.size()>0&&cartulina2.size()>0){
             int numero=(int)(Math.random()*99);
-            for (int i = 0; i <20 ; i++) {
-                if (Cartulina1.get(i) == numero){
-                    Cartulina1.remove(numero);
-                }
-                }
-            for (int i = 0; i <20 ; i++) {
-                if (Cartulina2.get(i)==numero){
-                    Cartulina2.remove(numero);
-            }
+            comprobarNumero(numero,cartulina1);
+            comprobarNumero(numero,cartulina2);
         }
-    }
-        if (Cartulina1==null){
-            System.out.println("Ha ganado la carulina 1");
-        } else if (Cartulina2==null){
-            System.out.println("Ha ganado la cartulna 2");
+        if (cartulina1.size()==0){
+            System.out.println("Ha ganado la cartulina 1");
+        }
+        if (cartulina2.size()==0){
+            System.out.println("Ha ganado la cartulina 2");
         }
     }
 }
+
 
